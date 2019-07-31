@@ -1,3 +1,6 @@
+import time
+import random
+
 class Row():
     def __init__(self,n):
         self.dat=[0 for i in range(n)]
@@ -11,11 +14,16 @@ class Row():
     def __len__(self):
         return self.n
     def __str__(self):
-        d=[str(i) for i in self.dat]
+        d=[i for i in self.dat]
+        
+        for c,i in enumerate(d):
+            if i==1:
+                d[c]='X'
+            else:
+                d[c]=' '
         ret='| '
         ret+=' | '.join(d)
         ret+=' |'
-
         return ret
 class Table():
     def __init__(self,n):
@@ -35,6 +43,7 @@ class Table():
     def __repr__(self):
         rep=[]
         for i in self.tab:
+            
             rep.append(str(i)+'\n')
         return ''.join(rep)
     def __iter__(self):
@@ -103,27 +112,20 @@ class Table():
 
 
 
-def main():
+def main(n):
 
-    m=Table(11)
-    print(m)
+    m=Table(n)
     
-    T=[
-    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    ]
+    T=[[random.randint(0,1) for i in range(n)] for j in range(n)] 
     m.consume(T)
     print(m)
-    print(m.age())
+    
+    while m!=m.age() and m!=m.age().age():
+        m=m.age()
+        print(m)
+        time.sleep(0.1)
+    
+
 
 
 
@@ -132,5 +134,25 @@ def main1():
     for i in range(11):
         print(t)
 if __name__=='__main__':
-    main()
+    main(29)
 
+
+
+
+
+"""
+Infinite ones:
+   T=[
+    [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ]
+"""
