@@ -10,10 +10,11 @@ Yellow one ages the grid once
 White one clears the grid
 To pause press any key.
 
-
+03/08 - "drag"
+  added a drag function, so that creating custom seeds is even easier (especially on large tables)
 
 
 
 Planning to add:
-  -drag drawnign
+
   -support for rectangular grid

@@ -155,12 +155,7 @@ def paused(grid, screen,clock,m, s, n, speed):
                 
                 x,y =pygame.mouse.get_pos()
                 if x<s*n and y<s*n:
-                    x=x//s
-                    y=y//s
-
-                    m.paint(y, x)
-                    update_grid(m,grid,screen)
-                    pygame.display.update(0,0,s*n,s*n)
+                    drag(m,s,grid,screen,clock)
                 if 10<=y<=50 and n*s+25<x:
                     if speed ==10:
                         speed=1
@@ -185,7 +180,29 @@ def paused(grid, screen,clock,m, s, n, speed):
         clock.tick(15)  
     return speed
 def randmtb(n):
+    #random n by n field of 0s and 1s
     return [[random.randint(0,1) for i in range(n)] for j in range(n)] 
+def drag(m,s, grid, screen, clock):
+    draggin=True
+    ret=[]
+    x0=100000
+    y0=100000
+    while draggin:
+
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONUP:
+                draggin=False
+        x,y =pygame.mouse.get_pos()
+        x=x//s
+        y=y//s
+        if x!=x0 or y!=y0:
+            m.paint(y, x)
+        x0, y0=x, y
+        update_grid(m,grid,screen)
+        pygame.display.update(x*s,y*s,s,s)
+        clock.tick(50)
+
+        
 
 
 T=[
@@ -303,7 +320,7 @@ def main(n,s):
 
     
 if __name__=='__main__':
-    main(100, 10)
+    main(200, 5)
 
 
 
