@@ -93,7 +93,7 @@ class Table():
         """
         nei=self.neighbours(i,j)
         if self.alive(i,j):
-            if 1<nei<4:
+            if 2<nei<5:
                 return True
             else:
                 return False
@@ -109,32 +109,109 @@ class Table():
                 if self.willive(i,j):
                     baby[i][j]=1
         return baby
+    def paint(self,x,y):
+        global pause
+        n=self.n
+        if x//10<n and y//10<n:
+            if pause:
+                pause=False
+                
+            else:
+                pause=True
 
 
 
+
+from turtle import *
+ht()
+
+T=[
+    [0,1,0],
+    [1,0,0],
+    [1,1,1]
+]
+
+
+def square():
+    pen(fillcolor="black", pencolor="black", pensize=1)
+    
+    begin_fill()
+    pd()
+    right(180)
+    for i in range(4):
+        forward(8)
+        left(90)
+    right(180)
+    pu()
+
+    end_fill()
+def rep(T):
+    pu()
+    tracer(0,0)
+    goto(0,0)
+    setheading(90)
+    for i in T:
+        for j in i:
+            
+            if j==1:
+                square()   
+            right(90)
+            forward(10)
+            left(90)
+        left(90)
+        for j in i:
+            forward(10)
+        left(90)
+        forward(10)
+        right(180)
+    left(90)
+    update()
+
+pause= False
+def paus():
+    pause= True
+    if pause:
+        pause= False
+        
+    else:
+        pause= True
 def main(n):
-
+     
+    screensize(n*10+50,n*10+50)
+    setworldcoordinates(0,-n*10-50,n*10+50,0)
+    
     m=Table(n)
     
     T=[[random.randint(0,1) for i in range(n)] for j in range(n)] 
+    
     m.consume(T)
-    print(m)
-    
+    screen=Screen()
+    screen.onkey(paus, "Up")
+    screen.listen()
     while m!=m.age() and m!=m.age().age():
+        
+        clear()
+        ht()
+        
         m=m.age()
-        print(m)
-        time.sleep(0.1)
+        rep(m)
+        time.wait(0.5)
+        
+
+    rep(m)
+    time.sleep(2)
     
 
 
 
 
-def main1():
-    t=[0 for i in range(11)]
-    for i in range(11):
-        print(t)
+def main2():
+    rep(T)
 if __name__=='__main__':
-    main(29)
+    main(20)
+
+
+
 
 
 
