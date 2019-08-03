@@ -151,10 +151,6 @@ def paused(grid, screen,clock,m, s, n, speed):
                 quit()
             if event.type == pygame.KEYDOWN:    
                 pause=False    
-            if event.type == pygame.K_w:
-                m=m.age()
-                update_grid(m,grid,screen)
-                pygame.display.update(0,0,s*n,s*n)
             if event.type == pygame.MOUSEBUTTONUP:
                 
                 x,y =pygame.mouse.get_pos()
@@ -177,9 +173,14 @@ def paused(grid, screen,clock,m, s, n, speed):
                     m.consume(T)
                     update_grid(m,grid,screen)
                     pygame.display.update(0,0,s*n,s*n)
-                if 200<=y<=250 and n*s+25<x:
+                if 190<=y<=240 and n*s+25<x:
                     m=m.age()
                     update_grid(m,grid,screen)
+                    pygame.display.update(0,0,s*n,s*n)
+                if 280<=y<=330 and n*s+25<x:
+                    T=[[0 for i in range(n)] for j in range(n)]
+                    m.consume(T)
+                    update_grid(m,grid, screen)
                     pygame.display.update(0,0,s*n,s*n)
         clock.tick(15)  
     return speed
@@ -229,7 +230,8 @@ def main(n,s):
     speed=10
     button(screen,10,RED,n,s)
     button(screen,100,BLUE,n,s)
-    button(screen,200,WHITE,n,s)
+    button(screen,190,(255,255,0),n,s)
+    button(screen,280,WHITE,n,s)
     #table of size n
     m=Table(n)
     #creating a random spread of 1s and 0s
@@ -239,6 +241,15 @@ def main(n,s):
     grid=create_grid(m,s)
     # Loop as long as done == False
     while not done:
+        # Clear the screen and set the screen background
+        screen.fill(WHITE)
+        update_grid(m,grid,screen)
+        
+        
+        
+            # Go ahead and update the screen with what we've drawn.
+        # This MUST happen after all the other drawing commands.
+        pygame.display.update(0,0,s*n,s*n)
         if m==m.age() or m==m.age().age():
             m.consume(randmtb(n))
         for event in pygame.event.get():  # User did something
@@ -248,16 +259,39 @@ def main(n,s):
         # inside the main while not done loop.
             if event.type == pygame.KEYDOWN:
                 speed=paused(grid, screen, clock,m, s, n, speed)
-        # Clear the screen and set the screen background
-        screen.fill(WHITE)
-        update_grid(m,grid,screen)
+            if event.type == pygame.MOUSEBUTTONUP:
+                
+                x,y =pygame.mouse.get_pos()
+                if x<s*n and y<s*n:
+                    x=x//s
+                    y=y//s
+
+                    m.paint(y, x)
+                    update_grid(m,grid,screen)
+                    pygame.display.update(0,0,s*n,s*n)
+                if 10<=y<=50 and n*s+25<x:
+                    if speed ==10:
+                        speed=1
+                        button(screen,10,GREEN,n,s)
+                    else:
+                        speed=10
+                        button(screen,10,RED,n,s)
+                if  100<=y<=150 and n*s+25<x:
+                    T=[[random.randint(0,1) for i in range(n)] for j in range(n)] 
+                    m.consume(T)
+                    update_grid(m,grid,screen)
+                    pygame.display.update(0,0,s*n,s*n)
+                if 190<=y<=240 and n*s+25<x:
+                    m=m.age()
+                    update_grid(m,grid,screen)
+                    pygame.display.update(0,0,s*n,s*n)
+                if 280<=y<=330 and n*s+25<x:
+                    T=[[0 for i in range(n)] for j in range(n)]
+                    m.consume(T)
+                    update_grid(m,grid, screen)
+                    pygame.display.update(0,0,s*n,s*n)
         
         m=m.age()
-        print(m)
-            # Go ahead and update the screen with what we've drawn.
-        # This MUST happen after all the other drawing commands.
-        pygame.display.update(0,0,s*n,s*n)
- 
         # This limits the while loop to a max of 60 times per second.
         # Leave this out and we will use all CPU we can.
         
@@ -269,7 +303,7 @@ def main(n,s):
 
     
 if __name__=='__main__':
-    main(10, 40)
+    main(100, 10)
 
 
 
