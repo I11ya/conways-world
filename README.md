@@ -1,4 +1,10 @@
-# conways-world
+# conways-
+'''
+Copyright 2019. Illya Nuzbrokh. All rights reserved.
+
+Do not use for profit.
+
+'''
 My take on Conway's Game of Life
 Modules use: pygame, turtle, time, random, and their dependencies if any.
 conway,py uses turtle(just because I wanted to remember the old days)
@@ -16,5 +22,7 @@ To pause press any key.
 
 
 Planning to add:
-
+  -visible cue for pausing
+  -visible cue for dragging
+  
   -support for rectangular grid

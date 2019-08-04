@@ -1,3 +1,9 @@
+'''
+Copyright 2019. Illya Nuzbrokh. All rights reserved.
+
+Do not use for profit.
+
+'''
 import time
 import random
 import pygame
@@ -98,7 +104,7 @@ class Table():
             else:
                 return False
         else:
-            if nei==3:
+            if nei==3 or nei==6:
                 return True
             else:
                 return False
@@ -157,11 +163,11 @@ def paused(grid, screen,clock,m, s, n, speed):
                 if x<s*n and y<s*n:
                     drag(m,s,grid,screen,clock)
                 if 10<=y<=50 and n*s+25<x:
-                    if speed ==10:
+                    if speed ==3:
                         speed=1
                         button(screen,10,GREEN,n,s)
                     else:
-                        speed=10
+                        speed=3
                         button(screen,10,RED,n,s)
                 if  100<=y<=150 and n*s+25<x:
                     T=[[random.randint(0,1) for i in range(n)] for j in range(n)] 
@@ -244,7 +250,8 @@ def main(n,s):
     # Loop until the user clicks the close button.
     done = False
     clock = pygame.time.Clock()
-    speed=10
+    speed=5
+    screen.fill(WHITE)
     button(screen,10,RED,n,s)
     button(screen,100,BLUE,n,s)
     button(screen,190,(255,255,0),n,s)
@@ -259,14 +266,12 @@ def main(n,s):
     # Loop as long as done == False
     while not done:
         # Clear the screen and set the screen background
-        screen.fill(WHITE)
+        
         update_grid(m,grid,screen)
-        
-        
-        
             # Go ahead and update the screen with what we've drawn.
         # This MUST happen after all the other drawing commands.
         pygame.display.update(0,0,s*n,s*n)
+        
         if m==m.age() or m==m.age().age():
             m.consume(randmtb(n))
         for event in pygame.event.get():  # User did something

@@ -1,3 +1,9 @@
+'''
+Copyright 2019. Illya Nuzbrokh. All rights reserved.
+
+Do not use for profit.
+
+'''
 import time
 import random
 
