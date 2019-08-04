@@ -1,4 +1,4 @@
-# conways-
+# conways-world
 '''
 Copyright 2019. Illya Nuzbrokh. All rights reserved.
 
