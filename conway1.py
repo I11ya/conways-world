@@ -8,6 +8,10 @@ import time
 import random
 import pygame
 class Row():
+    '''
+    A row class, main purpose instead for why it's used instead of a list is to
+    is to loop the table around horizontally via the use of %n
+    '''
     def __init__(self,n):
         self.dat=[0 for i in range(n)]
         self.n=n
@@ -32,6 +36,13 @@ class Row():
         ret+=' |'
         return ret
 class Table():
+    '''
+    The actual table that has all the cells on it.
+    
+
+
+
+    '''
     def __init__(self,n):
         
         tab=[Row(n) for i in range(n)]
@@ -109,6 +120,11 @@ class Table():
             else:
                 return False
     def age(self):
+        '''
+        Table().age()--> aged table by 1 tick
+
+        To add: - controlled aging?
+        '''
         baby=Table(self.n)
         for i in range(self.n):
             for j in range(self.n):
@@ -116,11 +132,24 @@ class Table():
                     baby[i][j]=1
         return baby
     def paint(self,y,x):
+        '''
+        m[y][x]=opposite of itself 
+
+        this is how I draw them with the cursor
+
+        '''
         self[y][x]=(self[y][x]+1)%2
 
 
 
 def create_grid(Tab,size):
+    '''
+    (Table instances, width/height of the table)
+    --->
+    a list of lists of rectangles to be drawn
+
+    '''
+
     ret=[]
     for c, i in enumerate(Tab):
         ret.append([])
@@ -128,6 +157,10 @@ def create_grid(Tab,size):
             ret[c].append(pygame.Rect(k*size, c*size,size-2,size-2))
     return ret
 def update_grid(Tab, Grid,screen):
+    '''
+    might be a misleading name but it just draws the cells on the screen before its updated
+
+    '''
     BLACK = (0, 0, 0)
     WHITE = (255, 255, 255)
     BLUE = (0, 0, 255)
@@ -140,10 +173,22 @@ def update_grid(Tab, Grid,screen):
             else:
                 pygame.draw.rect(screen, WHITE,Grid[c][k], 0 )
 def button(screen, y, colour, n, s):
+    '''
+    creates a button
+    I'm lazy
+    '''
     pygame.draw.rect(screen,colour,(n*s+25,y,50,50),0)
     pygame.display.update(n*s+25,y,50,50)
 
 def paused(grid, screen,clock,m, s, n, speed):
+    '''
+    basically almost a full fledged mode of running like main()
+    all the arguments passed to it are just so that the same variables are affected
+    (didn't want to have global variables)
+
+    loops while picking up mouse actions.
+
+    '''
     GREEN = (0, 255, 0)
     RED = (255, 0, 0)
     pause=True
@@ -183,12 +228,19 @@ def paused(grid, screen,clock,m, s, n, speed):
                     m.consume(T)
                     update_grid(m,grid, screen)
                     pygame.display.update(0,0,s*n,s*n)
+        #how responsive/taxing the interface is
         clock.tick(15)  
     return speed
 def randmtb(n):
+    '''
     #random n by n field of 0s and 1s
+    '''
     return [[random.randint(0,1) for i in range(n)] for j in range(n)] 
 def drag(m,s, grid, screen, clock):
+    '''
+    when this function is called pygame starts picking up the position of the cursor
+    and colouring the squares the opposite colour
+    '''
     draggin=True
     ret=[]
     x0=100000
@@ -206,11 +258,12 @@ def drag(m,s, grid, screen, clock):
         x0, y0=x, y
         update_grid(m,grid,screen)
         pygame.display.update(x*s,y*s,s,s)
+        #how responsive/taxing the drawing is
         clock.tick(50)
 
         
 
-
+#just a random starting seed for 11x11
 T=[
     [1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
     [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
@@ -226,7 +279,12 @@ T=[
     ]
 
 def main(n,s):
-     
+    """
+Main funtion of the code
+n- for n x n table created
+s- how many pixels a grid square will be, the cells will be (s-2) x (s-2) pixels
+
+    """ 
 
  
     # Initialize the game engine
@@ -325,7 +383,8 @@ def main(n,s):
 
     
 if __name__=='__main__':
-    main(200, 5)
+    #main(20, 50)
+    
 
 
 
